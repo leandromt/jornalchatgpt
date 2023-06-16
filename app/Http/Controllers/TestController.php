@@ -37,6 +37,7 @@ class TestController extends Controller
             );
 
             $act = ((new Actions())->getChatCompletations($data));
+            dd($act);
             $msgs[] = ["role" => "assistant", "content" => $act->choices[0]->message->content];
             //dump($act->choices[0]->message->content);
             dump($msgs);

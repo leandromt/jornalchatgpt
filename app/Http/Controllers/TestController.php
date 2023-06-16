@@ -64,7 +64,7 @@ class TestController extends Controller
 
                     foreach ($array_suggestions as $s) {
                         $suggestion = new Suggestion();
-                        $suggestion->name = strlen($s) > 200 ? substr($s, 0, 200) : $s;
+                        $suggestion->name = $this->limpa_texto($s);
                         $suggestion->save();
                     }
                 }
@@ -88,5 +88,19 @@ class TestController extends Controller
     public function setSlugAttribute($value)
     {
         // $this->attributes['slug'] = Str::slug($value);
+    }
+
+    /**
+     * 
+     */
+    private function limpa_texto($str)
+    {
+        $txt = $str;
+
+        if (strlen($str) > 200) {
+            $txt = substr($str, 0, 200);
+        }
+
+        return str_replace(array("#", "'", ";"), '', $txt);
     }
 }

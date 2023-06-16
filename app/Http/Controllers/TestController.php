@@ -6,13 +6,14 @@ use App\Services\ChatGPT\Actions;
 use App\Models\Post;
 use App\Models\Suggestion;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class TestController extends Controller
 {
     public function index()
     {
-        $date = date_create("2013-03-15");
-        $day = date_format($date, "d F");
+        $dt = Carbon::create(now());
+        $day = $dt->format('j \d\e F');
 
         $promp = [
             'Não dê explicações sobre você. Não peça desculpas. Não fale sobre você. Aja como um historiador. Pesquise sobre acontecimentos e fatos que ocorrecem no dia ' . $day . ' no brasil. Escreva uma matéria completa detalhando os 10 acontecimentos mais relevantes que ocorreram nessa data informada. Retorne dentro de uma tag article html. Destaque com a tag strong as palavras mais relevantes. Adicione links das fontes de pesquisa.',

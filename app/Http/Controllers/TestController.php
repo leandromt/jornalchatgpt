@@ -59,15 +59,15 @@ class TestController extends Controller
                     $p->keywords = $act->choices[0]->message->content;
                 }
 
-                if ($k == 4) {
-                    $array_suggestions = explode(',', $act->choices[0]->message->content);
+                // if ($k == 4) {
+                //     $array_suggestions = explode(',', $act->choices[0]->message->content);
 
-                    foreach ($array_suggestions as $s) {
-                        $suggestion = new Suggestion();
-                        $suggestion->name = $this->limpa_texto($s);
-                        $suggestion->save();
-                    }
-                }
+                //     foreach ($array_suggestions as $s) {
+                //         $suggestion = new Suggestion();
+                //         $suggestion->name = $this->limpa_texto($s);
+                //         $suggestion->save();
+                //     }
+                // }
             }
         }
 

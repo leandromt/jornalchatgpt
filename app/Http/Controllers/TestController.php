@@ -23,8 +23,6 @@ class TestController extends Controller
             'Sugira 5 assuntos relacionados a matéria que você criou. Apenas títulos. Separe por virgula.'
         ];
 
-        dump('comecou...');
-
         $p = new Post();
 
         foreach ($promp as $k => $msg) {
@@ -37,36 +35,38 @@ class TestController extends Controller
             );
 
             $act = ((new Actions())->getChatCompletations($data));
-            dd($act);
-            $msgs[] = ["role" => "assistant", "content" => $act->choices[0]->message->content];
-            //dump($act->choices[0]->message->content);
-            dump($msgs);
 
-            // Salva o post
-            if ($k == 0) {
-                $p->content = $act->choices[0]->message->content;
-            }
+            if (isset($act->choices[0])) {
+                $msgs[] = ["role" => "assistant", "content" => $act->choices[0]->message->content];
+                //dump($act->choices[0]->message->content);
+                dump($msgs);
 
-            if ($k == 1) {
-                $p->title = $act->choices[0]->message->content;
-                $p->slug = Str::slug($act->choices[0]->message->content);
-            }
+                // Salva o post
+                if ($k == 0) {
+                    $p->content = $act->choices[0]->message->content;
+                }
 
-            if ($k == 2) {
-                $p->description = $act->choices[0]->message->content;
-            }
+                if ($k == 1) {
+                    $p->title = $act->choices[0]->message->content;
+                    $p->slug = Str::slug($act->choices[0]->message->content);
+                }
 
-            if ($k == 3) {
-                $p->keywords = $act->choices[0]->message->content;
-            }
+                if ($k == 2) {
+                    $p->description = $act->choices[0]->message->content;
+                }
 
-            if ($k == 4) {
-                $array_suggestions = explode(',', $act->choices[0]->message->content);
+                if ($k == 3) {
+                    $p->keywords = $act->choices[0]->message->content;
+                }
 
-                foreach ($array_suggestions as $s) {
-                    $suggestion = new Suggestion();
-                    $suggestion->name = strlen($s) > 200 ? substr($s, 0, 200) : $s;
-                    $suggestion->save();
+                if ($k == 4) {
+                    $array_suggestions = explode(',', $act->choices[0]->message->content);
+
+                    foreach ($array_suggestions as $s) {
+                        $suggestion = new Suggestion();
+                        $suggestion->name = strlen($s) > 200 ? substr($s, 0, 200) : $s;
+                        $suggestion->save();
+                    }
                 }
             }
         }

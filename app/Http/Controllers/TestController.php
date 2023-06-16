@@ -43,31 +43,31 @@ class TestController extends Controller
 
                 // Salva o post
                 if ($k == 0) {
-                    $p->content = $act->choices[0]->message->content;
+                    $p->content = (string)$act->choices[0]->message->content;
                 }
 
                 if ($k == 1) {
-                    $p->title = $act->choices[0]->message->content;
+                    $p->title = (string)$act->choices[0]->message->content;
                     $p->slug = Str::slug($act->choices[0]->message->content);
                 }
 
                 if ($k == 2) {
-                    $p->description = $act->choices[0]->message->content;
+                    $p->description = (string)$act->choices[0]->message->content;
                 }
 
                 if ($k == 3) {
-                    $p->keywords = $act->choices[0]->message->content;
+                    $p->keywords = (string)$act->choices[0]->message->content;
                 }
 
-                // if ($k == 4) {
-                //     $array_suggestions = explode(',', $act->choices[0]->message->content);
+                if ($k == 4) {
+                    $array_suggestions = explode(',', $act->choices[0]->message->content);
 
-                //     foreach ($array_suggestions as $s) {
-                //         $suggestion = new Suggestion();
-                //         $suggestion->name = $this->limpa_texto($s);
-                //         $suggestion->save();
-                //     }
-                // }
+                    foreach ($array_suggestions as $s) {
+                        $suggestion = new Suggestion();
+                        $suggestion->name = $this->limpa_texto($s);
+                        $suggestion->save();
+                    }
+                }
             }
         }
 
@@ -95,7 +95,7 @@ class TestController extends Controller
      */
     private function limpa_texto($str)
     {
-        $txt = $str;
+        $txt = (string)$str;
 
         if (strlen($str) > 200) {
             $txt = substr($str, 0, 200);
